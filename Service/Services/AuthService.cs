@@ -167,7 +167,7 @@ public class AuthService : IAuthService
 
         var claims = _jwtService.ValidateJwtTokenAsync(token);
 
-        string? claimsUserId = claims?.FindFirst("UserId")?.ToString();
+        string? claimsUserId = claims?.FindFirst("UserId")?.Value;
 
         if (claimsUserId == null || !String.Equals(claimsUserId, userId))
             throw new UnauthorizedAccessException("Invalid token provided");

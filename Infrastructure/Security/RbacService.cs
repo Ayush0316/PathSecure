@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Infrastructure.Auth;
 using Infrastructure.Cache;
 using Infrastructure.Database;
 using Infrastructure.Repository;
@@ -48,12 +49,15 @@ public class RbacService : IRbacService
         if(userContext.PermissionIds == null || userContext.PermissionIds.Count == 0)
             throw new UnauthorizedAccessException("User has no permissions assigned");
 
+        if(userContext?.Email?.EndsWith(AuthConsts.ADMIN_DOMAIN, StringComparison.OrdinalIgnoreCase) == true)
+            return true;
+
         if (resource.Type == RbacResourceType.PAGE)
         {
-            return await CheckForPage(userContext, resource);
+            return await CheckForPage(userContext!, resource);
         }else
         {
-            return await CheckForApi(userContext, resource, action);
+            return await CheckForApi(userContext!, resource, action);
         }
     }
 

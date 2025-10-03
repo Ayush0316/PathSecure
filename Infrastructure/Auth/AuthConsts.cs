@@ -15,6 +15,8 @@ public class AuthConsts
 
     public const string NOT_Authenticated = "ANONYMOUS";
 
+    public const string ADMIN_DOMAIN = "@pathlock.com";
+
     public static readonly string[] UnsecuredPaths = [
         "/api/auth/login",
         "/api/auth/silentLogin",
